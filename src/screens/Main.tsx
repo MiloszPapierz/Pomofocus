@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
-import { Center, Text, View } from "native-base";
+import { Box, Center, Text, View } from "native-base";
 import Pomodoro from "../components/Pomodoro";
 import { PomodoroContext } from "../contexts/PomodoroProvider";
+import Navbar from "../components/Navbar";
 
 const Main = () => {
   const { step, pomodoroRound, breakRound } = useContext(PomodoroContext);
@@ -18,6 +19,7 @@ const Main = () => {
       justifyContent="center"
       display="flex"
       height="full"
+      position="relative"
     >
       <Center
         mx="8"
@@ -39,6 +41,9 @@ const Main = () => {
         <Text color="white" fontSize="md">
           {step === 1 ? "Time to focus!" : "Time for a break!"}
         </Text>
+      </Center>
+      <Center position="absolute" bottom="0" width="full">
+        <Navbar />
       </Center>
     </View>
   );
