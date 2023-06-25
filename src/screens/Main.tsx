@@ -5,7 +5,8 @@ import { PomodoroContext } from "../contexts/PomodoroProvider";
 import Navbar from "../components/Navbar";
 
 const Main = () => {
-  const { step, pomodoroRound, breakRound } = useContext(PomodoroContext);
+  const { step, pomodoroRound, breakRound, progress } =
+    useContext(PomodoroContext);
 
   return (
     <View
@@ -43,6 +44,22 @@ const Main = () => {
         </Text>
       </Center>
       <Center position="absolute" bottom="0" width="full">
+        <Box
+          position="absolute"
+          left="0"
+          top="0"
+          backgroundColor="black"
+          height="0.50"
+          width="100%"
+        ></Box>
+        <Box
+          position="absolute"
+          left="0"
+          top="0"
+          backgroundColor="white"
+          height="0.50"
+          width={progress + "%"}
+        ></Box>
         <Navbar />
       </Center>
     </View>

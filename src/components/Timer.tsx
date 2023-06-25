@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Text } from "native-base";
 import { PomodoroContext } from "../contexts/PomodoroProvider";
+import { calculateTimerProgress } from "../utils/TimerProgress";
 
 const Timer = () => {
   const {
@@ -11,7 +12,7 @@ const Timer = () => {
     longBreakTime,
     shortBreakTime,
     pomodoroRound,
-    setIsRunning,
+    setProgress,
   } = useContext(PomodoroContext);
   const [minutes, setMinutes] = useState<number>(
     step === 1 ? pomodoroTime : step === 2 ? shortBreakTime : longBreakTime
@@ -49,9 +50,19 @@ const Timer = () => {
             setSeconds(59);
           }
         }
+        setProgress(
+          calculateTimerProgress(
+            step === 1
+              ? pomodoroTime
+              : step === 2
+              ? shortBreakTime
+              : longBreakTime,
+            minutes,
+            seconds
+          )
+        );
       }, 1000);
     }
-
     return () => {
       clearInterval(interval);
     };
