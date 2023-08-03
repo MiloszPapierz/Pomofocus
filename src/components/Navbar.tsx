@@ -6,7 +6,7 @@ import ModalComponent from "./Modal";
 import { ResolveColor } from "../utils/StepToColorConverter";
 
 const Navbar = () => {
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(true);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const { step } = useContext(PomodoroContext);
 
   return (

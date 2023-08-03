@@ -6,7 +6,7 @@ interface Props {
 
 interface PomodoroContextProps {
   isRunning: boolean;
-  setIsRunning: () => void;
+  setIsRunning: (isRunning: boolean) => void;
   step: number;
   setStep: (step: number) => void;
   pomodoroTime: number;
@@ -16,7 +16,9 @@ interface PomodoroContextProps {
   longBreakTime: number;
   setLongBreakTime: (longBreakTime: number) => void;
   pomodoroRound: number;
+  setPomodoroRound: (pomodoroRound: number) => void;
   breakRound: number;
+  setBreakRound: (breakRound: number) => void;
   progress: number;
   setProgress: (progress: number) => void;
   longBreakInterval: number;
@@ -39,7 +41,9 @@ const defaultPomodoroContext: PomodoroContextProps = {
   longBreakTime: 15,
   setLongBreakTime: () => {},
   pomodoroRound: 1,
+  setPomodoroRound: () => {},
   breakRound: 1,
+  setBreakRound: () => {},
   progress: 0,
   setProgress: () => {},
   longBreakInterval: 4,
@@ -57,7 +61,7 @@ const PomodoroContext = createContext<PomodoroContextProps>(
 const PomodoroProvider = ({ children }: Props) => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [step, setStep] = useState<number>(1);
-  const [pomodoroTime, setPomodoroTime] = useState<number>(1);
+  const [pomodoroTime, setPomodoroTime] = useState<number>(30);
   const [shortBreakTime, setShortBreakTime] = useState<number>(25);
   const [longBreakTime, setLongBreakTime] = useState<number>(15);
   const [pomodoroRound, setPomodoroRound] = useState<number>(1);
@@ -68,27 +72,14 @@ const PomodoroProvider = ({ children }: Props) => {
   const [autoStartPomodoros, setAutoStartPomodoros] = useState<boolean>(false);
 
   const handleSetStep = (newStep: number) => {
-    if (!(newStep < 1 || newStep > 3)) {
-      setStep(newStep);
-      if (newStep === 2 || newStep === 3) {
-        setPomodoroRound((rounds) => rounds + 1);
-      } else {
-        setBreakRound((rounds) => rounds + 1);
-      }
-    }
-  };
+    if (newStep < 1 && newStep > 3) return;
 
-  const handleIsRunning = () => {
-    setIsRunning((running) => !running);
-  };
-
-  const handleSetProgress = (progress: number) => {
-    setProgress(progress);
+    setStep(newStep);
   };
 
   const pomodoroContextValue: PomodoroContextProps = {
     isRunning,
-    setIsRunning: handleIsRunning,
+    setIsRunning,
     step,
     setStep: handleSetStep,
     pomodoroTime,
@@ -98,9 +89,11 @@ const PomodoroProvider = ({ children }: Props) => {
     longBreakTime,
     setLongBreakTime,
     pomodoroRound,
+    setPomodoroRound,
     breakRound,
+    setBreakRound,
     progress,
-    setProgress: handleSetProgress,
+    setProgress,
     longBreakInterval,
     setLongBreakInterval,
     autoStartBreaks,

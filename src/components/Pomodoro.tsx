@@ -10,10 +10,6 @@ const items = ["Pomodoro", "Short Break", "Long Break"];
 const Pomodoro = () => {
   const { step, isRunning, setIsRunning } = useContext(PomodoroContext);
 
-  const handleRunning = () => {
-    setIsRunning();
-  };
-
   return (
     <Box p="4">
       <VStack alignItems="center" space="4">
@@ -30,7 +26,13 @@ const Pomodoro = () => {
           })}
         </HStack>
         <Timer />
-        <Button width="4/5" backgroundColor="white" onPress={handleRunning}>
+        <Button
+          width="4/5"
+          backgroundColor="white"
+          onPress={() => {
+            setIsRunning(!isRunning);
+          }}
+        >
           <Text color={ResolveColor(step)} fontSize="2xl">
             {isRunning ? "STOP" : "START"}
           </Text>

@@ -12,7 +12,11 @@ const Timer = () => {
     longBreakTime,
     shortBreakTime,
     pomodoroRound,
+    longBreakInterval,
     setProgress,
+    setPomodoroRound,
+    setBreakRound,
+    breakRound,
   } = useContext(PomodoroContext);
   const [minutes, setMinutes] = useState<number>(
     step === 1 ? pomodoroTime : step === 2 ? shortBreakTime : longBreakTime
@@ -36,14 +40,17 @@ const Timer = () => {
         if (seconds === 0) {
           if (minutes === 0) {
             clearInterval(interval);
+
             if (step === 1) {
-              if (pomodoroRound % 4 === 0) {
+              if (pomodoroRound % longBreakInterval === 0) {
                 setStep(3);
               } else {
                 setStep(2);
               }
+              setPomodoroRound(pomodoroRound + 1);
             } else {
               setStep(1);
+              setBreakRound(breakRound + 1);
             }
           } else {
             setMinutes((minutes) => minutes - 1);
