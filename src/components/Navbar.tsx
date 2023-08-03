@@ -1,9 +1,12 @@
-import React, { useContext } from "react";
-import { Box, Button, HStack, Image, Text } from "native-base";
+import React, { useContext, useState } from "react";
+import { Button, HStack, Image, Text } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { PomodoroContext } from "../contexts/PomodoroProvider";
+import ModalComponent from "./Modal";
+import { ResolveColor } from "../utils/StepToColorConverter";
 
 const Navbar = () => {
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(true);
   const { step } = useContext(PomodoroContext);
 
   return (
@@ -27,16 +30,14 @@ const Navbar = () => {
         leftIcon={<Ionicons size={16} name="settings" color="white" />}
         size="sm"
         rounded="md"
-        backgroundColor={
-          step === 1
-            ? "pomodorro.light"
-            : step === 2
-            ? "shortBreak.light"
-            : "longBreak.light"
-        }
+        onPress={() => {
+          setIsModalVisible(true);
+        }}
+        backgroundColor={ResolveColor(step)}
       >
         Setting
       </Button>
+      <ModalComponent isOpen={isModalVisible} setIsOpen={setIsModalVisible} />
     </HStack>
   );
 };

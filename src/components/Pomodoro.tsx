@@ -3,6 +3,7 @@ import { HStack, Box, Text, VStack, Button } from "native-base";
 import PomodoroItem from "./PomodoroItem";
 import Timer from "./Timer";
 import { PomodoroContext } from "../contexts/PomodoroProvider";
+import { ResolveColor } from "../utils/StepToColorConverter";
 
 const items = ["Pomodoro", "Short Break", "Long Break"];
 
@@ -30,16 +31,7 @@ const Pomodoro = () => {
         </HStack>
         <Timer />
         <Button width="4/5" backgroundColor="white" onPress={handleRunning}>
-          <Text
-            color={
-              step === 1
-                ? "pomodorro.dark"
-                : step === 2
-                ? "shortBreak.dark"
-                : "longBreak.dark"
-            }
-            fontSize="2xl"
-          >
+          <Text color={ResolveColor(step)} fontSize="2xl">
             {isRunning ? "STOP" : "START"}
           </Text>
         </Button>

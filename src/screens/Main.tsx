@@ -3,6 +3,7 @@ import { Box, Center, Text, View } from "native-base";
 import Pomodoro from "../components/Pomodoro";
 import { PomodoroContext } from "../contexts/PomodoroProvider";
 import Navbar from "../components/Navbar";
+import { ResolveColor } from "../utils/StepToColorConverter";
 
 const Main = () => {
   const { step, pomodoroRound, breakRound, progress } =
@@ -22,17 +23,7 @@ const Main = () => {
       height="full"
       position="relative"
     >
-      <Center
-        mx="8"
-        rounded="md"
-        backgroundColor={
-          step === 1
-            ? "pomodorro.light"
-            : step === 2
-            ? "shortBreak.light"
-            : "longBreak.light"
-        }
-      >
+      <Center mx="8" rounded="md" backgroundColor={ResolveColor(step)}>
         <Pomodoro />
       </Center>
       <Center mt="4">
