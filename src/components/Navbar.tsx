@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, HStack, Image, Text } from "native-base";
+import { Box, Button, HStack, Image, Text } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { PomodoroContext } from "../contexts/PomodoroProvider";
 import ModalComponent from "./Modal";
@@ -26,18 +26,20 @@ const Navbar = () => {
           Pomofocus
         </Text>
       </HStack>
-      <Button
-        leftIcon={<Ionicons size={16} name="settings" color="white" />}
-        size="sm"
-        rounded="md"
-        onPress={() => {
-          setIsModalVisible(true);
-        }}
-        backgroundColor={ResolveColor(step)}
-      >
-        Setting
-      </Button>
-      <ModalComponent isOpen={isModalVisible} setIsOpen={setIsModalVisible} />
+      <Box>
+        <Button
+          leftIcon={<Ionicons size={16} name="settings" color="white" />}
+          size="sm"
+          rounded="md"
+          onPress={() => {
+            setIsModalVisible(true);
+          }}
+          backgroundColor={ResolveColor(step)}
+        >
+          Setting
+        </Button>
+        <ModalComponent isOpen={isModalVisible} setIsOpen={setIsModalVisible} />
+      </Box>
     </HStack>
   );
 };
