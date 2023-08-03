@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import { SettingType, settingSchema } from "../../types/SettingForm";
+import { SettingType, settingSchema } from "../../types/Setting";
 import { Box, Button, HStack, Input, Switch, Text, VStack } from "native-base";
 import { ReactNode, useContext } from "react";
 import { PomodoroContext } from "../../contexts/PomodoroProvider";

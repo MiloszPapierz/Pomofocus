@@ -6,6 +6,7 @@ import { calculateTimerProgress } from "../utils/TimerProgress";
 const Timer = () => {
   const {
     isRunning,
+    setIsRunning,
     step,
     setStep,
     pomodoroTime,
@@ -17,6 +18,10 @@ const Timer = () => {
     setPomodoroRound,
     setBreakRound,
     breakRound,
+    autoStartBreaks,
+    autoStartPomodoros,
+    setAutoStartBreaks,
+    setAutoStartPomodoros,
   } = useContext(PomodoroContext);
   const [minutes, setMinutes] = useState<number>(
     step === 1 ? pomodoroTime : step === 2 ? shortBreakTime : longBreakTime
@@ -47,10 +52,12 @@ const Timer = () => {
               } else {
                 setStep(2);
               }
+              if (!autoStartBreaks) setIsRunning(false);
               setPomodoroRound(pomodoroRound + 1);
             } else {
               setStep(1);
               setBreakRound(breakRound + 1);
+              if (!autoStartPomodoros) setIsRunning(false);
             }
           } else {
             setMinutes((minutes) => minutes - 1);
