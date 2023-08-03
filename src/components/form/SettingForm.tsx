@@ -1,12 +1,16 @@
 import { Formik } from "formik";
 import { SettingType, settingSchema } from "../../types/SettingForm";
-import { Box, HStack, Input, Switch, Text, VStack } from "native-base";
+import { Box, Button, HStack, Input, Switch, Text, VStack } from "native-base";
 import { ReactNode, useContext } from "react";
 import { PomodoroContext } from "../../contexts/PomodoroProvider";
 import FormSection from "./FormSection";
 import { AntDesign } from "@expo/vector-icons";
 
-const SettingForm = () => {
+interface Props {
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+const SettingForm = ({ setIsOpen }: Props) => {
   const {
     pomodoroTime,
     setPomodoroTime,
@@ -50,6 +54,7 @@ const SettingForm = () => {
         setLongBreakInterval(values.longBreakInterval);
         setAutoStartBreaks(values.autoStartBreaks);
         setAutoStartPomodoros(values.autoStartPomodoros);
+        setIsOpen(false);
       }}
     >
       {({ handleBlur, values, setFieldValue, submitForm }) => (
@@ -152,6 +157,7 @@ const SettingForm = () => {
               )}
             />
           </FormSection>
+          <Button onPress={submitForm}>Ok</Button>
         </>
       )}
     </Formik>

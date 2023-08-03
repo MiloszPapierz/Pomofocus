@@ -21,11 +21,8 @@ const ModalComponent = ({ isOpen, setIsOpen }: Props) => {
           </Text>
         </Modal.Header>
         <Modal.Body>
-          <SettingForm />
+          <SettingForm setIsOpen={setIsOpen} />
         </Modal.Body>
-        <Modal.Footer>
-          <Button>Ok</Button>
-        </Modal.Footer>
       </Modal.Content>
     </Modal>
   );
