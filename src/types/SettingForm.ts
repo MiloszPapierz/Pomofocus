@@ -10,15 +10,6 @@ const settingSchema = Yup.object().shape({
   longBreakInterval: Yup.number().min(0).default(4),
 });
 
-const settingInitialSchema: testType = {
-  pomodoro: 0,
-  shortBreak: 0,
-  longBreak: 0,
-  autoStartBreaks: false,
-  autoStartPomodoros: false,
-  longBreakInterval: 4,
-};
+type SettingType = InferType<typeof settingSchema>;
 
-type testType = InferType<typeof settingSchema>;
-
-export { settingSchema, testType, settingInitialSchema };
+export { settingSchema, SettingType };

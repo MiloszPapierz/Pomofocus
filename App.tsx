@@ -23,6 +23,8 @@ export default function App() {
       },
       additional: {
         medium: "#E3B6B6",
+        light: "#84c733cc",
+        dark: "#555555",
       },
     },
   });
