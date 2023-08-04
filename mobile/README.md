@@ -1,6 +1,6 @@
-#Pomofocus mobile clone notes
+# Pomofocus mobile clone notes
 
-##Features
+## Features
 - Run pomodorro
 - Change pomodorro settings
 - Add Task
