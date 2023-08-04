@@ -20,8 +20,6 @@ const Timer = () => {
     breakRound,
     autoStartBreaks,
     autoStartPomodoros,
-    setAutoStartBreaks,
-    setAutoStartPomodoros,
   } = useContext(PomodoroContext);
   const [minutes, setMinutes] = useState<number>(
     step === 1 ? pomodoroTime : step === 2 ? shortBreakTime : longBreakTime
@@ -33,7 +31,7 @@ const Timer = () => {
       step === 1 ? pomodoroTime : step === 2 ? shortBreakTime : longBreakTime
     );
     setSeconds(0);
-  }, [step]);
+  }, [step, pomodoroTime, shortBreakTime, longBreakTime]);
 
   useEffect(() => {
     let interval: NodeJS.Timer;
