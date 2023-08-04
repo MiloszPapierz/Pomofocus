@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import { SettingType, settingSchema } from "../../types/Setting";
+import { SettingType, settingSchema } from "../../types/setting";
 import { Box, Button, HStack, Input, Switch, Text, VStack } from "native-base";
 import { ReactNode, useContext } from "react";
 import { PomodoroContext } from "../../contexts/PomodoroProvider";
@@ -13,17 +13,12 @@ interface Props {
 const SettingForm = ({ setIsOpen }: Props) => {
   const {
     pomodoroTime,
-    setPomodoroTime,
     shortBreakTime,
-    setShortBreakTime,
     longBreakTime,
-    setLongBreakTime,
     longBreakInterval,
-    setLongBreakInterval,
     autoStartPomodoros,
-    setAutoStartPomodoros,
     autoStartBreaks,
-    setAutoStartBreaks,
+    updateSettings,
   } = useContext(PomodoroContext);
 
   const handleNumberInput = (value: string) => {
@@ -48,12 +43,7 @@ const SettingForm = ({ setIsOpen }: Props) => {
       initialValues={initial}
       validationSchema={settingSchema}
       onSubmit={(values) => {
-        setPomodoroTime(values.pomodoro);
-        setShortBreakTime(values.shortBreak);
-        setLongBreakTime(values.longBreak);
-        setLongBreakInterval(values.longBreakInterval);
-        setAutoStartBreaks(values.autoStartBreaks);
-        setAutoStartPomodoros(values.autoStartPomodoros);
+        updateSettings(values);
         setIsOpen(false);
       }}
     >

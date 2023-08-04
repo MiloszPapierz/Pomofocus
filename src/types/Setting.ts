@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { InferType } from "./Global";
+import { InferType } from "./global";
 
 const settingSchema = Yup.object().shape({
   pomodoro: Yup.number().min(0).required().positive(),

@@ -1,4 +1,6 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SettingType } from "../types/setting";
 
 interface Props {
   children: React.ReactNode;
@@ -27,6 +29,7 @@ interface PomodoroContextProps {
   setAutoStartBreaks: (autoBreak: boolean) => void;
   autoStartPomodoros: boolean;
   setAutoStartPomodoros: (autoPomodoro: boolean) => void;
+  updateSettings: (newSettings: SettingType) => void;
 }
 
 const defaultPomodoroContext: PomodoroContextProps = {
@@ -52,6 +55,7 @@ const defaultPomodoroContext: PomodoroContextProps = {
   setAutoStartBreaks: () => {},
   autoStartPomodoros: false,
   setAutoStartPomodoros: () => {},
+  updateSettings: () => {},
 };
 
 const PomodoroContext = createContext<PomodoroContextProps>(
@@ -62,7 +66,7 @@ const PomodoroProvider = ({ children }: Props) => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [step, setStep] = useState<number>(1);
   const [pomodoroTime, setPomodoroTime] = useState<number>(30);
-  const [shortBreakTime, setShortBreakTime] = useState<number>(25);
+  const [shortBreakTime, setShortBreakTime] = useState<number>(5);
   const [longBreakTime, setLongBreakTime] = useState<number>(15);
   const [pomodoroRound, setPomodoroRound] = useState<number>(1);
   const [breakRound, setBreakRound] = useState<number>(1);
@@ -76,6 +80,54 @@ const PomodoroProvider = ({ children }: Props) => {
 
     setStep(newStep);
   };
+
+  const updateSettings = async (newSettings: SettingType) => {
+    try {
+      await AsyncStorage.setItem("SettingOptions", JSON.stringify(newSettings));
+      setPomodoroTime(newSettings.pomodoro);
+      setShortBreakTime(newSettings.shortBreak);
+      setLongBreakTime(newSettings.longBreak);
+      setLongBreakInterval(newSettings.longBreakInterval);
+      setAutoStartBreaks(newSettings.autoStartBreaks);
+      setAutoStartPomodoros(newSettings.autoStartPomodoros);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    const getDataFromStorage = async () => {
+      try {
+        const data = await AsyncStorage.getItem("SettingOptions");
+
+        if (data === null) {
+          const defaultSettings: SettingType = {
+            autoStartBreaks,
+            autoStartPomodoros,
+            longBreakInterval,
+            longBreak: longBreakTime,
+            shortBreak: shortBreakTime,
+            pomodoro: pomodoroTime,
+          };
+          await AsyncStorage.setItem(
+            "SettingOptions",
+            JSON.stringify(defaultSettings)
+          );
+        } else {
+          const persistedData = JSON.parse(data) as SettingType;
+          setPomodoroTime(persistedData.pomodoro);
+          setShortBreakTime(persistedData.shortBreak);
+          setLongBreakTime(persistedData.longBreak);
+          setLongBreakInterval(persistedData.longBreakInterval);
+          setAutoStartBreaks(persistedData.autoStartBreaks);
+          setAutoStartPomodoros(persistedData.autoStartPomodoros);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getDataFromStorage();
+  }, []);
 
   const pomodoroContextValue: PomodoroContextProps = {
     isRunning,
@@ -100,6 +152,7 @@ const PomodoroProvider = ({ children }: Props) => {
     setAutoStartBreaks,
     autoStartPomodoros,
     setAutoStartPomodoros,
+    updateSettings,
   };
 
   return (
