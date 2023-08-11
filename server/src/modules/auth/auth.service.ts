@@ -1,5 +1,5 @@
 import { Injectable, ForbiddenException, Logger } from '@nestjs/common';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from 'src/modules/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserRegisterDto } from './dto/user-register.dto';
 import * as argon from 'argon2';
