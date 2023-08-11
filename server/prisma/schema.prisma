@@ -17,6 +17,19 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   hashedRt  String?
+  tasks     Task[]
 
   @@map("users")
+}
+
+model Task {
+  id          Int       @id @default(autoincrement())
+  note        String?
+  actPomodoro Int         
+  estPomodoro Int
+  title       String
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int       
+
+  @@map("tasks")
 }
