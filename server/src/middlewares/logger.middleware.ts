@@ -13,9 +13,18 @@ export class LoggerMiddleware implements NestMiddleware {
     res.on('finish', () => {
       const { statusCode } = res;
 
-      this.logger.log(
-        `OUTGOING RESPONSE ${method} ${statusCode} ${originalUrl}`,
-      );
+      if (statusCode <= 499 && statusCode >= 400)
+        this.logger.warn(
+          `OUTGOING RESPONSE ${method} ${statusCode} ${originalUrl}`,
+        );
+      if (statusCode >= 500)
+        this.logger.error(
+          `OUTGOING RESPONSE ${method} ${statusCode} ${originalUrl}`,
+        );
+      if (statusCode <= 399)
+        this.logger.log(
+          `OUTGOING RESPONSE ${method} ${statusCode} ${originalUrl}`,
+        );
     });
 
     next();
