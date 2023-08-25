@@ -62,6 +62,7 @@ const PomodoroContext = createContext<PomodoroContextProps>(
   defaultPomodoroContext
 );
 
+// TODO: Put setting values to object to remove boilerplate code
 const PomodoroProvider = ({ children }: Props) => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [step, setStep] = useState<number>(1);
